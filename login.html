@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Login - A.OEA Professional Portfolio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="icon" type="image/png" href="Favicon.png" sizes="32x32" />
+  <style>
+    * { 
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #071126 0%, #0f172a 100%);
+      background-attachment: fixed;
+      color: #e6f6ff;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at 18% 38%, rgba(56, 189, 248, 0.06) 0%, transparent 45%), radial-gradient(circle at 82% 78%, rgba(11, 97, 184, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .auth-container {
+      width: min(520px, 92vw);
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .auth-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 18px;
+      padding: 48px 32px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .logo-section img {
+      height: 40px;
+      width: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .logo-section h2 {
+      color: #38bdf8;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .auth-card h1 {
+      margin: 12px 0;
+      color: #e2e8f0;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8 0%, #0b61b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lead {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 28px 0;
+    }
+
+    .form-status {
+      min-height: 1.25rem;
+      margin: 0;
+      color: #9bdcff;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .form-status.is-error {
+      color: #ffb4ab;
+    }
+
+    .form-btn:disabled {
+      cursor: wait;
+      opacity: 0.7;
+      transform: none;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.6);
+      color: #f8fafc;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-input::placeholder {
+      color: rgba(203, 213, 225, 0.6);
+    }
+
+    .password-wrap { position:relative; }
+    .password-wrap .form-input { padding-right:52px; }
+    .password-toggle { position:absolute; top:50%; right:8px; display:grid; place-items:center; width:38px; height:38px; border:1px solid #b8d5ee; border-radius:7px; transform:translateY(-50%); background:#ffffff; color:#082b59; cursor:pointer; z-index:2; }
+    .password-toggle:hover,.password-toggle:focus-visible { background:#dceeff; color:#1268b3; outline:3px solid rgba(94,169,232,.35); outline-offset:1px; }
+
+    .form-input:focus {
+      border-color: #38bdf8;
+      background: rgba(15, 23, 42, 0.8);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      gap: 12px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #cbd5e1;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: #38bdf8;
+    }
+
+    .forgot-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .forgot-link:hover {
+      color: #6dd5f8;
+      text-decoration: underline;
+    }
+
+    .form-btn {
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #38bdf8 0%, #0b61b8 100%);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
+    }
+
+    .form-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: #94a3b8;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent);
+    }
+
+    .auth-footer {
+      text-align: center;
+    }
+
+    .auth-footer p {
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+
+    .auth-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .auth-link:hover {
+      color: #6dd5f8;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 1.1rem;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-4px) scale(1.1);
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+      border-color: #38bdf8;
+    }
+
+    .social-icons a.facebook { color: #1877f2; }
+    .social-icons a.facebook:hover { background: rgba(24, 119, 242, 0.15); }
+
+    .social-icons a.instagram { color: #E1306C; }
+    .social-icons a.instagram:hover { background: rgba(225, 48, 108, 0.15); }
+
+    .social-icons a.x { color: #ffffff; }
+    .social-icons a.x:hover { background: #000000; }
+
+    .social-icons a.linkedin { color: #0a66c2; }
+    .social-icons a.linkedin:hover { background: rgba(10, 102, 194, 0.15); }
+
+    .social-icons a.github { color: #ffffff; }
+    .social-icons a.github:hover { background: rgba(255, 255, 255, 0.1); }
+
+    .social-icons a.tiktok { color: #ffffff; }
+    .social-icons a.tiktok:hover { background: #000000; }
+
+    .social-icons a.youtube { color: #ff0000; }
+    .social-icons a.youtube:hover { background: rgba(255, 0, 0, 0.15); }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .auth-card {
+        padding: 32px 20px;
+      }
+
+      .auth-card h1 {
+        font-size: 1.5rem;
+      }
+
+      .logo-section h2 {
+        font-size: 1.2rem;
+      }
+
+      .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+    :root { --auth-navy:#10243d; --auth-blue:#1769aa; --auth-teal:#137f8b; --auth-green:#2c9b72; --auth-white:#f8fcfc; --auth-muted:#bfd4d8; }
+    body { background:linear-gradient(135deg,#10243d 0%,#14586b 58%,#137f8b 100%); color:var(--auth-white); }
+    body::before { background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),radial-gradient(circle at 15% 15%,rgba(44,155,114,.22),transparent 28%),radial-gradient(circle at 85% 80%,rgba(224,185,87,.16),transparent 25%); background-size:36px 36px,36px 36px,auto,auto; }
+    .auth-card { background:rgba(16,36,61,.88); border-color:rgba(156,224,218,.3); box-shadow:0 24px 70px rgba(5,24,42,.42); }
+    .logo-section h2 { color:#8fe0d5; } .auth-card h1 { background:linear-gradient(135deg,#d8f4ef,#7fcde1); }
+    .lead,.auth-footer p,.checkbox-group { color:var(--auth-muted); } .form-label { color:#e8f5f4; }
+    .form-input { border-color:rgba(191,212,216,.28); background:rgba(7,25,44,.62); } .form-input:focus { border-color:#74d0c3; box-shadow:0 0 0 3px rgba(44,155,114,.2); }
+    .form-input::placeholder { color:rgba(191,212,216,.62); } .checkbox-group input[type="checkbox"] { accent-color:var(--auth-green); }
+    .forgot-link,.auth-link { color:#8fe0d5; } .forgot-link:hover,.auth-link:hover { color:#f0d27b; }
+    .form-btn { background:linear-gradient(135deg,var(--auth-teal),var(--auth-blue)); box-shadow:0 8px 24px rgba(19,127,139,.3); }
+    .divider { color:#9eb8bd; } .divider::before,.divider::after { background:linear-gradient(90deg,transparent,rgba(143,224,213,.4),transparent); }
+    .social-icons a { border-color:rgba(143,224,213,.22); background:transparent; }
+    .social-icons a.facebook { color:#1877f2; } .social-icons a.instagram { color:#e1306c; } .social-icons a.x { color:#fff; } .social-icons a.linkedin { color:#0a66c2; } .social-icons a.github,.social-icons a.tiktok { color:#fff; } .social-icons a.youtube { color:#ff3b3b; }
+    :root { --auth-navy:#082b59; --auth-blue:#1676c8; --auth-teal:#1268b3; --auth-green:#1676c8; --auth-white:#fff; --auth-muted:#c8def2; }
+    body { background:linear-gradient(135deg,#082b59 0%,#104b8e 58%,#1676c8 100%); }
+    .auth-card { background:rgba(8,43,89,.92); border-color:rgba(191,224,255,.34); }
+    .logo-section h2 { color:#bfe0ff; } .auth-card h1 { background:linear-gradient(135deg,#fff,#9ed1ff); }
+    .lead,.auth-footer p,.checkbox-group { color:var(--auth-muted); }
+    .form-input { background:rgba(4,28,60,.7); border-color:rgba(191,224,255,.3); }
+    .form-input:focus { border-color:#9ed1ff; box-shadow:0 0 0 3px rgba(94,169,232,.22); }
+    .form-btn { background:linear-gradient(135deg,#1676c8,#082b59); box-shadow:0 8px 24px rgba(4,28,60,.35); }
+    .forgot-link,.auth-link { color:#bfe0ff; } .forgot-link:hover,.auth-link:hover { color:#fff; }
+    .password-requirements { background:rgba(94,169,232,.12); border-left-color:#9ed1ff; color:#c8def2; }
+    .divider::before,.divider::after { background:linear-gradient(90deg,transparent,rgba(191,224,255,.45),transparent); }
+    .auth-card h1 { color:#ffffff; background:none; -webkit-text-fill-color:#ffffff; -webkit-background-clip:initial; background-clip:initial; }
+    .auth-card h2,.auth-card h3,.auth-card p,.auth-card label,.auth-card span,.auth-card strong { visibility:visible; opacity:1; }
+  </style>
+</head>
+<body>
+  <main class="auth-container">
+    <section class="auth-card">
+      <div class="auth-header">
+        <div class="logo-section">
+          <img src="AOEA.png" alt="A.OEA Logo">
+          <h2>A.OEA</h2>
+        </div>
+        <h1>Welcome Back</h1>
+        <p class="lead">Access your professional portfolio and collaborate with us</p>
+      </div>
+
+      <form action="#" class="auth-form" id="loginForm">
+        <div class="form-field">
+          <label class="form-label" for="email">Email or Username</label>
+          <input 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            type="text" 
+            placeholder="you@example.com or your username" 
+            required
+            autocomplete="username"
+          >
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="password">Password</label>
+          <div class="password-wrap">
+            <input id="password" name="password" class="form-input" type="password" placeholder="Enter your password" required autocomplete="current-password">
+            <button class="password-toggle" type="button" data-target="password" aria-label="Show password" title="Show password"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <div class="checkbox-group">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <a href="mailto:ola777abraham@gmail.com?subject=Password%20Reset%20Request" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="form-btn">Sign In</button>
+        <p class="form-status" id="loginStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const identity = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value;
+          const button = this.querySelector('[type="submit"]');
+          const status = document.getElementById('loginStatus');
+          status.textContent = '';
+          status.className = 'form-status';
+          button.disabled = true;
+          button.textContent = 'Signing in...';
+          fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ identity, password }) })
+            .then(async response => {
+              const contentType = response.headers.get('content-type') || '';
+              if (!contentType.includes('application/json')) {
+                throw new Error('The website server is not connected. Open this page through http://localhost:3000/login.html, not directly from a file.');
+              }
+              const data = await response.json();
+              if (!response.ok) throw new Error(data.error || 'Unable to sign in.');
+              if (document.getElementById('remember').checked) localStorage.setItem('aoea-login-identity', identity); else localStorage.removeItem('aoea-login-identity');
+              sessionStorage.setItem('showSuccess','true');
+              sessionStorage.setItem('successTitle','Login Successful!');
+              sessionStorage.setItem('successMessage', `Welcome back, ${data.user.username}. Redirecting to your dashboard...`);
+              window.location.href = 'dashboard.html';
+            })
+            .catch(error => { status.textContent = error.message.includes('Failed to fetch') ? 'The local website server is not running. Start it with npm start, then open http://localhost:3000/login.html.' : error.message; status.className = 'form-status is-error'; })
+            .finally(() => { button.disabled = false; button.textContent = 'Sign In'; });
+        });
+
+        const savedIdentity = localStorage.getItem('aoea-login-identity');
+        if (savedIdentity) {
+          document.getElementById('email').value = savedIdentity;
+          document.getElementById('remember').checked = true;
+        }
+      </script>
+
+      <div class="divider">Connect</div>
+
+      <div class="social-icons" aria-label="Social media links">
+        <a href="https://facebook.com/olawale4vip" target="_blank" rel="noopener noreferrer" class="facebook" title="Follow on Facebook" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://instagram.com/olawale4vip" target="_blank" rel="noopener noreferrer" class="instagram" title="Follow on Instagram" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://x.com/olawale4vip" target="_blank" rel="noopener noreferrer" class="x" title="Follow on X" aria-label="X"><i class="bi bi-x"></i></a>
+        <a href="https://linkedin.com/in/olawale4vip" target="_blank" rel="noopener noreferrer" class="linkedin" title="Connect on LinkedIn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/olawale4vip" target="_blank" rel="noopener noreferrer" class="github" title="View GitHub" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        <a href="https://tiktok.com/olawale4vip" target="_blank" rel="noopener noreferrer" class="tiktok" title="Follow on TikTok" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        <a href="https://youtube.com/olawale4vip" target="_blank" rel="noopener noreferrer" class="youtube" title="Subscribe on YouTube" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+
+      <div class="auth-footer">
+        <p style="margin-top: 24px;">Don't have an account?</p>
+        <a href="signup.html" class="auth-link">Create New Account</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll('.password-toggle').forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const input = document.getElementById(this.dataset.target);
+        const icon = this.querySelector('i');
+        const showing = input.type === 'text';
+        input.type = showing ? 'password' : 'text';
+        icon.className = showing ? 'bi bi-eye' : 'bi bi-eye-slash';
+        this.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+        this.title = showing ? 'Show password' : 'Hide password';
+      });
+    });
+  </script>
+</body>
+</html>
